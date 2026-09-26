@@ -1,0 +1,31 @@
+// Certification-to-exam map checked against Cisco's current exam list (September 2026).
+// A certification can require more than one independently booked exam. Only IDs with question banks can start.
+window.OMNITECH_TRACKS = [
+ {name:'Cisco CCST IT Support',requirement:'امتحان واحد',items:[['100-140','CCST IT Support','ccst-it-support']]},
+ {name:'Cisco CCST Networking',requirement:'امتحان واحد',items:[['100-150','CCST Networking','ccst-networking']]},
+ {name:'Cisco CCNA',requirement:'امتحان واحد',items:[['200-301','CCNA','ccna']]},
+ {name:'Cisco CCNA Automation',requirement:'امتحان واحد',items:[['200-901','CCNAAUTO','ccna-automation']]},
+ {name:'Cisco CCNP Enterprise',requirement:'Core + امتحان تخصص واحد',items:[['350-401','ENCOR','encor-350-401'],['300-410','ENARSI','enarsi-300-410'],['300-415','ENSDWI','ensdwi-300-415'],['300-420','ENSLD','ensld-300-420'],['300-435','ENAUTO','enauto-300-435'],['300-440','ENCC','encc-300-440'],['300-445','ENNA','enna-300-445']]},
+ {name:'Cisco CCNP Data Center',requirement:'Core + امتحان تخصص واحد',items:[['350-601','DCCOR','dccor-350-601'],['300-610','DCID','dcid-300-610'],['300-615','DCIT','dcit-300-615'],['300-620','DCACI','dcaci-300-620'],['300-635','DCNAUTO','dcnauto-300-635'],['300-640','DCAI','dcai-300-640']]},
+ {name:'Cisco CCNP Service Provider',requirement:'Core + امتحان تخصص واحد',items:[['350-501','SPCOR','spcor-350-501'],['300-510','SPRI','spri-300-510'],['300-515','SPVI','spvi-300-515'],['300-540','SPCNI','spcni-300-540']]},
+ {name:'Cisco CCNP Wireless',requirement:'Core + امتحان تخصص واحد',items:[['350-101','WLCOR','wlcor-350-101'],['300-110','WLSD','wlsd-300-110'],['300-120','WLSI','wlsi-300-120']]},
+ {name:'Cisco CCNP Automation',requirement:'Core + امتحان تخصص واحد',items:[['350-901','AUTOCOR','autocor-350-901'],['300-435','ENAUTO','enauto-300-435'],['300-635','DCNAUTO','dcnauto-300-635']]},
+ {name:'Cisco CCIE Enterprise Infrastructure',requirement:'امتحان Core + لاب عملي منفصل',items:[['350-401','ENCOR','encor-350-401'],['LAB','CCIE Enterprise Infrastructure lab',null,'lab']]},
+ {name:'Cisco CCIE Data Center',requirement:'امتحان Core + لاب عملي منفصل',items:[['350-601','DCCOR','dccor-350-601'],['LAB','CCIE Data Center lab',null,'lab']]},
+ {name:'Cisco CCIE Service Provider',requirement:'امتحان Core + لاب عملي منفصل',items:[['350-501','SPCOR','spcor-350-501'],['LAB','CCIE Service Provider lab',null,'lab']]},
+ {name:'Cisco CCIE Wireless',requirement:'امتحان Core + لاب عملي منفصل',items:[['350-101','WLCOR','wlcor-350-101'],['LAB','CCIE Wireless lab',null,'lab']]},
+ {name:'Cisco CCIE Automation',requirement:'امتحان Core + اختبار عملي منفصل',items:[['350-901','AUTOCOR','autocor-350-901'],['LAB','CCIE Automation Practical',null,'lab']]},
+ {name:'Cisco CCDE',requirement:'تحريري + اختبار تصميم عملي منفصل',items:[['400-007','CCDE Written','ccde-400-007'],['PRACTICAL','CCDE Practical',null,'lab']]},
+ {name:'Cisco CCST Cybersecurity',requirement:'امتحان واحد',items:[['100-160','CCST Cybersecurity','ccst-cybersecurity']]},
+ {name:'Cisco CCNA Cybersecurity',requirement:'امتحان واحد',items:[['200-201','CCNACBR','ccna-cybersecurity']]},
+ {name:'Cisco CCNP Security',requirement:'Core + امتحان تخصص واحد',items:[['350-701','SCOR','scor-350-701'],['300-710','SNCF','sncf-300-710'],['300-715','SISE','sise-300-715'],['300-740','SSCA','ssca-300-740'],['300-745','SDSI','sdsi-300-745']]},
+ {name:'Cisco CCNP Cybersecurity',requirement:'Core + امتحان تخصص واحد',items:[['350-201','CBRCOR','cbrcor-350-201'],['300-215','CBRFIR','cbrfir-300-215'],['300-220','CBRTHD','cbrthd-300-220']]},
+ {name:'Cisco CCIE Security',requirement:'امتحان Core + لاب عملي منفصل',items:[['350-701','SCOR','scor-350-701'],['LAB','CCIE Security lab',null,'lab']]},
+ {name:'CompTIA Network+',requirement:'امتحان واحد',items:[['N10-009','Network+','network-plus']]},
+ {name:'CompTIA Security+',requirement:'امتحان واحد',items:[['SY0-701','Security+','security-plus']]},
+ {name:'CompTIA CySA+',requirement:'امتحان واحد',items:[['CS0-003','CySA+','cysa-plus']]},
+ {name:'CompTIA PenTest+',requirement:'امتحان واحد',items:[['PT0-003','PenTest+','pentest-plus']]},
+ {name:'CompTIA SecurityX',requirement:'امتحان واحد',items:[['CAS-005','SecurityX','securityx']]},
+ {name:'CompTIA Cloud+',requirement:'امتحان واحد',items:[['CV0-004','Cloud+','cloud-plus']]},
+ {name:'CompTIA A+',requirement:'Core 1 + Core 2',items:[['220-1201','A+ Core 1','a-plus-core-1'],['220-1202','A+ Core 2','a-plus-core-2']]}
+];

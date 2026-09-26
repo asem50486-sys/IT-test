@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniTech — Seamless Solutions for a Connected World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #080b10;
+    --bg-soft: #0e131b;
+    --panel: #101722;
+    --line: rgba(140,170,200,0.14);
+    --purple: #a35cff;
+    --cyan: #33d9e8;
+    --green: #6ee88a;
+    --text: #eaf1f7;
+    --muted: #7f8ea1;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* ambient circuit background */
+  .bg-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(163,92,255,0.08), transparent 40%),
+      radial-gradient(circle at 85% 75%, rgba(51,217,232,0.07), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(110,232,138,0.05), transparent 45%);
+  }
+  .bg-lines{
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.35;
+  }
+
+  a{color:inherit; text-decoration:none;}
+
+  /* ===== NAV ===== */
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px 6vw;
+    background: rgba(8,11,16,0.72);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand img{width:38px; height:38px; border-radius:50%; object-fit:cover;}
+  .brand-name{font-family:var(--display); font-weight:700; letter-spacing:0.5px; font-size:1.15rem;}
+  .brand-name span{background:linear-gradient(90deg,var(--purple),var(--cyan),var(--green)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .nav-links{display:flex; gap:32px; font-size:0.92rem; color:var(--muted);}
+  .nav-links a:hover{color:var(--cyan);}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative; z-index:1;
+    min-height: 92vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding: 60px 6vw 40px;
+  }
+  .hero-eye-wrap{
+    position:relative; width:220px; height:220px; margin-bottom:8px;
+  }
+  .hero-eye-wrap img{
+    width:100%; height:100%; object-fit:contain;
+    filter: drop-shadow(0 0 40px rgba(163,92,255,0.25)) drop-shadow(0 0 60px rgba(51,217,232,0.15));
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-10px); }
+  }
+  .eyebrow{
+    font-family: var(--mono); font-size:0.78rem; letter-spacing:3px; text-transform:uppercase;
+    color: var(--cyan); margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before, .eyebrow::after{
+    content:''; width:28px; height:1px; background: linear-gradient(90deg, transparent, var(--cyan));
+  }
+  .eyebrow::after{ background: linear-gradient(90deg, var(--cyan), transparent); }
+
+  h1.headline{
+    font-family: var(--display);
+    font-weight:700;
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height:1.04;
+    letter-spacing:-0.5px;
+    margin-bottom:22px;
+  }
+  h1.headline .grad{
+    background: linear-gradient(100deg, var(--purple) 0%, var(--cyan) 50%, var(--green) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{
+    max-width: 620px; color: var(--muted); font-size: 1.08rem; line-height:1.65; margin-bottom:36px;
+  }
+  .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+  .btn{
+    font-family: var(--body); font-weight:600; font-size:0.95rem;
+    padding: 14px 30px; border-radius:8px; cursor:pointer; border:1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .btn-primary{
+    background: linear-gradient(100deg, var(--purple), var(--cyan));
+    color:#04070a;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 10px 30px rgba(51,217,232,0.25); }
+  .btn-ghost{
+    border-color: var(--line); color: var(--text); background: rgba(255,255,255,0.02);
+  }
+  .btn-ghost:hover{ border-color: var(--cyan); color: var(--cyan); }
+
+  .scan-line{
+    margin-top:60px; width:100%; max-width:900px; height:1px;
+    background: linear-gradient(90deg, transparent, var(--purple), var(--cyan), var(--green), transparent);
+    opacity:0.5;
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section{ position:relative; z-index:1; padding: 100px 6vw; max-width:1280px; margin:0 auto; }
+  .section-head{ text-align:center; margin-bottom:56px; }
+  .section-head .tag{
+    font-family: var(--mono); font-size:0.75rem; letter-spacing:3px; text-transform:uppercase;
+    color: var(--purple);
+  }
+  .section-head h2{
+    font-family: var(--display); font-weight:700; font-size: clamp(1.9rem, 4vw, 2.8rem);
+    margin-top:10px;
+  }
+
+  /* ===== COURSES ===== */
+  .course-grid{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap:26px;
+  }
+  @media (max-width:820px){ .course-grid{ grid-template-columns: 1fr; } }
+
+  .course-card{
+    position:relative;
+    background: linear-gradient(160deg, var(--panel), rgba(16,23,34,0.4));
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 30px 30px 26px;
+    cursor:pointer;
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    overflow:hidden;
+  }
+  .course-card::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+    opacity:0.9;
+  }
+  .course-card:hover{
+    transform: translateY(-4px);
+    border-color: rgba(160,180,210,0.3);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+  .course-card[data-course="mcsa"]{ --accent-a: #7c6bff; --accent-b: #33d9e8; }
+  .course-card[data-course="itsupport"]{ --accent-a: #33d9e8; --accent-b: #6ee88a; }
+  .course-card[data-course="ccna"]{ --accent-a: #6ee88a; --accent-b: #f4d35e; }
+  .course-card[data-course="cyber"]{ --accent-a: #ff5c8a; --accent-b: #a35cff; }
+
+  .course-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; }
+  .course-icon{
+    width:52px; height:52px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(255,255,255,0.03); border:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .course-icon svg{ width:26px; height:26px; }
+  .course-code{
+    font-family: var(--mono); font-size:0.72rem; color: var(--muted); letter-spacing:1.5px;
+  }
+  .course-name{
+    font-family: var(--display); font-weight:700; font-size:1.5rem; margin-top:4px;
+  }
+  .course-desc-short{
+    color: var(--muted); font-size:0.94rem; line-height:1.6; margin-bottom:22px;
+  }
+  .course-bottom{ display:flex; align-items:center; justify-content:space-between; }
+  .course-cta{
+    font-family: var(--body); font-size:0.85rem; font-weight:600; color: var(--text);
+    display:flex; align-items:center; gap:6px;
+  }
+  .course-card:hover .course-cta{ color: var(--cyan); }
+  .course-cta svg{ width:14px; height:14px; transition: transform 0.2s ease; }
+  .course-card:hover .course-cta svg{ transform: translateX(4px); }
+
+  /* ===== MODAL ===== */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:200;
+    background: rgba(4,6,10,0.78);
+    backdrop-filter: blur(6px);
+    display:flex; align-items:center; justify-content:center;
+    padding: 24px;
+    opacity:0; pointer-events:none;
+    transition: opacity 0.25s ease;
+  }
+  .modal-overlay.open{ opacity:1; pointer-events:auto; }
+  .modal{
+    width:100%; max-width:620px; max-height:85vh; overflow-y:auto;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 40px;
+    position:relative;
+    transform: translateY(16px) scale(0.98);
+    transition: transform 0.25s ease;
+  }
+  .modal-overlay.open .modal{ transform: translateY(0) scale(1); }
+  .modal-close{
+    position:absolute; top:20px; right:20px;
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(255,255,255,0.04); border:1px solid var(--line);
+    cursor:pointer; color: var(--muted); font-size:1.1rem;
+  }
+  .modal-close:hover{ color: var(--text); border-color: var(--cyan); }
+  .modal-eyebrow{
+    font-family: var(--mono); font-size:0.72rem; letter-spacing:2px; color: var(--muted); margin-bottom:8px;
+  }
+  .modal h3{
+    font-family: var(--display); font-weight:700; font-size:1.9rem; margin-bottom:16px;
+    background: linear-gradient(100deg, var(--purple), var(--cyan));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .modal-desc p{ color: var(--muted); line-height:1.75; margin-bottom:16px; font-size:0.98rem; }
+  .modal-list{ list-style:none; margin: 18px 0; }
+  .modal-list li{
+    color: var(--text); font-size:0.94rem; padding: 9px 0 9px 26px; position:relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .modal-list li:last-child{ border-bottom:none; }
+  .modal-list li::before{
+    content:''; position:absolute; left:0; top:16px; width:8px; height:8px; border-radius:2px;
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+  }
+  .modal-actions{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
+  #courses, .modal{ direction:rtl; text-align:right; }
+  .course-bottom{ justify-content:flex-start; }
+  .modal-close{ right:auto; left:20px; }
+  .modal-list{ padding:0; }
+  .modal-list li{ padding:9px 26px 9px 0; }
+  .modal-list li::before{ left:auto; right:0; }
+  .modal h4{ margin:22px 0 8px; font-size:1.05rem; }
+  .modal-benefit{ color:var(--muted); line-height:1.75; }
+  @media(max-width:600px){ .modal{ padding:30px 22px; } }
+
+  /* ===== ABOUT / WHY ===== */
+  .why-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:24px; }
+  @media (max-width:820px){ .why-grid{ grid-template-columns:1fr; } }
+  .why-card{
+    padding:28px; border:1px solid var(--line); border-radius:12px;
+    background: rgba(255,255,255,0.015);
+  }
+  .why-card .num{ font-family:var(--mono); color:var(--purple); font-size:0.8rem; letter-spacing:2px; }
+  .why-card h4{ font-family:var(--display); font-size:1.2rem; margin: 10px 0 10px; }
+  .why-card p{ color:var(--muted); font-size:0.92rem; line-height:1.6; }
+
+  /* ===== CONTACT / FOOTER ===== */
+  footer{
+    position:relative; z-index:1;
+    border-top:1px solid var(--line);
+    padding: 70px 6vw 40px;
+    background: linear-gradient(180deg, transparent, rgba(163,92,255,0.03));
+  }
+  .footer-top{
+    display:flex; flex-wrap:wrap; gap:60px; justify-content:space-between; margin-bottom:50px;
+  }
+  .footer-brand{ max-width:340px; }
+  .footer-brand .brand{ margin-bottom:16px; }
+  .footer-brand p{ color:var(--muted); font-size:0.92rem; line-height:1.65; }
+  .footer-col h5{
+    font-family:var(--mono); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase;
+    color:var(--muted); margin-bottom:18px;
+  }
+  .footer-col a, .footer-col .row{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px; font-size:0.94rem; color:var(--text);
+  }
+  .footer-col a:hover{ color: var(--cyan); }
+  .footer-col svg{ width:17px; height:17px; color:var(--muted); flex-shrink:0; }
+  .footer-bottom{
+    padding-top:26px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    color:var(--muted); font-size:0.82rem;
+  }
+  .footer-bottom .grad-text{
+    background: linear-gradient(90deg,var(--purple),var(--cyan),var(--green));
+    -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:600;
+  }
+
+  ::-webkit-scrollbar{ width:8px; }
+  ::-webkit-scrollbar-track{ background:var(--bg); }
+  ::-webkit-scrollbar-thumb{ background: var(--panel); border-radius:8px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-eye-wrap img{ animation:none; }
+    *{ transition:none !important; }
+  }
+
+  :focus-visible{ outline: 2px solid var(--cyan); outline-offset:3px; }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<svg class="bg-lines" width="100%" height="100%" style="position:fixed;inset:0;">
+  <defs>
+    <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a35cff"/>
+      <stop offset="1" stop-color="#33d9e8"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<nav>
+  <div class="brand">
+    <img src="logo_cropped.jpg" alt="OmniTech logo">
+    <div class="brand-name">OMNI<span>TECH</span></div>
+  </div>
+  <div class="nav-links">
+    <a href="#courses">Courses</a>
+    <a href="assessment.html">تحديد المستوى</a>
+    <a href="#why">Why Us</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eye-wrap">
+    <img src="logo_cropped.jpg" alt="OmniTech eye logo">
+  </div>
+  <div class="eyebrow">Seamless Solutions for a Connected World</div>
+  <h1 class="headline">Training built for<br class="hide-mobile"> <span class="grad">the network you'll run.</span></h1>
+  <p class="sub">OmniTech runs hands-on IT certification courses in system administration, technical support, networking, and cybersecurity — taught by people who actually work the ticket queue.</p>
+  <div class="hero-ctas">
+    <a href="#courses" class="btn btn-primary">Browse courses</a>
+    <a href="assessment.html" class="btn btn-ghost">اختبر مستواك</a>
+    <a href="#contact" class="btn btn-ghost">Talk to us</a>
+  </div>
+  <div class="scan-line"></div>
+</section>
+
+<section class="section" id="courses">
+  <div class="section-head">
+    <div class="tag">// COURSES</div>
+    <h2>الكورسات المتاحة</h2>
+  </div>
+
+  <div class="course-grid">
+
+    <div class="course-card" data-course="mcsa">
+      <div class="course-top">
+        <div>
+          <div class="course-code">SYSTEM ADMINISTRATION</div>
+          <div class="course-name">MCSA</div>
+        </div>
+        <div class="course-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7c6bff" stroke-width="1.6"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
+        </div>
+      </div>
+      <p class="course-desc-short">مقدمة عملية لإدارة Windows Server وActive Directory وخدمات الشبكة داخل بيئة عمل.</p>
+      <div class="course-bottom">
+        <div class="course-cta">اعرف التفاصيل <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      </div>
+    </div>
+
+    <div class="course-card" data-course="itsupport">
+      <div class="course-top">
+        <div>
+          <div class="course-code">HELPDESK & FIELD SUPPORT</div>
+          <div class="course-name">IT Technical Support</div>
+        </div>
+        <div class="course-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#33d9e8" stroke-width="1.6"><path d="M12 3a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1v1a6 6 0 0 0 6 6"/><path d="M12 3a5 5 0 0 1 5 5v3h2a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1v1a6 6 0 0 1-6 6"/><path d="M12 9v3M9 12h6"/></svg>
+        </div>
+      </div>
+      <p class="course-desc-short">أساسيات الدعم الفني وتشخيص أعطال الأجهزة والأنظمة والشبكات بخطوات عملية.</p>
+      <div class="course-bottom">
+        <div class="course-cta">اعرف التفاصيل <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      </div>
+    </div>
+
+    <div class="course-card" data-course="ccna">
+      <div class="course-top">
+        <div>
+          <div class="course-code">NETWORKING</div>
+          <div class="course-name">CCNA</div>
+        </div>
+        <div class="course-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6ee88a" stroke-width="1.6"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8 7.3 12 16m4-8.7L12 16M8.8 11c1.3 1.5 2.7 2 3.2 2.5s1.4 1 3.2 2.5"/></svg>
+        </div>
+      </div>
+      <p class="course-desc-short">تطبيقات في الشبكات والتوجيه والتبديل باستخدام أجهزة Cisco وتمارين شبكات.</p>
+      <div class="course-bottom">
+        <div class="course-cta">اعرف التفاصيل <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      </div>
+    </div>
+
+    <div class="course-card" data-course="cyber">
+      <div class="course-top">
+        <div>
+          <div class="course-code">SECURITY</div>
+          <div class="course-name">Cyber Security</div>
+        </div>
+        <div class="course-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ff5c8a" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+        </div>
+      </div>
+      <p class="course-desc-short">تعرف على أساسيات حماية الأنظمة والشبكات وتحليل التهديدات والاستجابة للحوادث.</p>
+      <div class="course-bottom">
+        <div class="course-cta">اعرف التفاصيل <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="why">
+  <div class="section-head">
+    <div class="tag">// Why OmniTech</div>
+    <h2>Built by people who've worked the queue</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="num">01</div>
+      <h4>Hands-on labs</h4>
+      <p>Every course is built around real configurations and real tickets, not slides — you leave able to do the job, not just describe it.</p>
+    </div>
+    <div class="why-card">
+      <div class="num">02</div>
+      <h4>Small groups</h4>
+      <p>Direct access to your instructor throughout the course, with time for the questions that come up once you're actually building something.</p>
+    </div>
+    <div class="why-card">
+      <div class="num">03</div>
+      <h4>Career-focused</h4>
+      <p>Curriculum mapped to what employers actually ask for in support, networking, and security roles across the region.</p>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="brand">
+        <img src="logo_cropped.jpg" alt="OmniTech logo">
+        <div class="brand-name">OMNI<span>TECH</span></div>
+      </div>
+      <p>Seamless solutions for a connected world. IT certification training in system administration, support, networking, and security.</p>
+    </div>
+
+    <div class="footer-col">
+      <h5>Get in touch</h5>
+      <a href="tel:+201060941830">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3.5a2 2 0 0 1 2 1.7q.04.5.15 1.5a2 2 0 0 1-.46 1.7l-1.45 1.45a2 2 0 0 0-.3 2.43 19.8 19.8 0 0 0 6 6 2 2 0 0 0 2.43-.3l1.45-1.45a2 2 0 0 1 1.73-.46q1 .11 1.5.15a2 2 0 0 1 1.7 2z"/></svg>
+        +20 106 094 1830
+      </a>
+      <a href="mailto:omni-tech13@outlook.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+        omni-tech13@outlook.com
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h5>Follow along</h5>
+      <a href="https://www.facebook.com/profile.php?id=61586138681378" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1z"/></svg>
+        Facebook
+      </a>
+      <a href="https://www.instagram.com/omni.tech13" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="grad-text">OMNITECH</div>
+    <div>&copy; 2026 OmniTech. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" dir="rtl">
+    <div class="modal-close" id="modalClose">&times;</div>
+    <div class="modal-eyebrow" id="modalEyebrow">COURSE</div>
+    <h3 id="modalTitle">Course Title</h3>
+    <div class="modal-desc" id="modalDesc"></div>
+    <h4>هتتعلم إيه؟</h4>
+    <ul class="modal-list" id="modalList"></ul>
+    <h4>هتستفيد إيه؟</h4>
+    <p class="modal-benefit" id="modalBenefit"></p>
+    <div class="modal-actions">
+      <a class="btn btn-primary" href="https://wa.me/201060941830" target="_blank" rel="noopener">اسأل عن الدورة على واتساب</a>
+      <a class="btn btn-ghost" href="mailto:omni-tech13@outlook.com">راسلنا بالإيميل</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const courseData = {
+    mcsa: {
+      code: "إدارة الأنظمة",
+      title: "MCSA — Windows Server Administration",
+      desc: "دورة في إدارة بيئات Windows Server، من تثبيت الخادم إلى إعداد المستخدمين والخدمات الأساسية للشبكة.",
+      list: ["تثبيت Windows Server وأدواره", "Active Directory وإدارة المستخدمين", "Group Policy", "DNS وDHCP ومشاركة الملفات", "النسخ الاحتياطي واستكشاف الأعطال"],
+      benefit: "هتقدر تنشئ بيئة خوادم تدريبية وتنفذ مهام الإدارة اليومية وتتعامل مع مشكلات شائعة بخطوات واضحة."
+    },
+    itsupport: {
+      code: "الدعم الفني",
+      title: "IT Technical Support",
+      desc: "دورة مناسبة للبداية في الدعم الفني، تركز على فحص المشكلات وتوثيقها وحلها عمليًا.",
+      list: ["مكونات الكمبيوتر وتشخيص الأعطال", "تثبيت Windows وحل مشكلاته", "أساسيات الشبكات للدعم الفني", "إعداد الطابعات والأجهزة الطرفية", "توثيق البلاغات والتعامل مع المستخدمين"],
+      benefit: "هتتعلم تتبع سبب العطل بدل التخمين، وتطبق خطوات الدعم الفني على أجهزة وسيناريوهات قريبة من بيئة العمل."
+    },
+    ccna: {
+      code: "الشبكات",
+      title: "CCNA — Routing & Switching",
+      desc: "دورة تأسيسية في شبكات Cisco مع تطبيقات على التوجيه والتبديل وإعداد الأجهزة.",
+      list: ["عناوين IP وتقسيم الشبكات", "إعداد الراوترات والسويتشات", "VLAN وTrunk وInter-VLAN Routing", "التوجيه الثابت وOSPF", "اختبار الاتصال واستكشاف الأعطال"],
+      benefit: "هتقدر تقرأ مخطط شبكة بسيط، وتجهز أجهزة الشبكة وتختبر الاتصال وتحدد مكان المشكلة عند تعطل المسار."
+    },
+    cyber: {
+      code: "الأمن السيبراني",
+      title: "Cyber Security",
+      desc: "مقدمة في أمن الشبكات والأنظمة، تشمل فهم التهديدات وطرق الحماية والمتابعة.",
+      list: ["التهديدات والثغرات الشائعة", "تقوية إعدادات الشبكات والأنظمة", "مراجعة السجلات والتنبيهات", "أساسيات الاستجابة للحوادث", "مبادئ الاختبار الأمني المصرح به"],
+      benefit: "هتتعلم تلاحظ مؤشرات الخطر وتراجع إعدادات الحماية وتتعامل مع سيناريوهات أمنية تدريبية بصورة منظمة."
+    }
+  };
+
+  const overlay = document.getElementById('modalOverlay');
+  const closeBtn = document.getElementById('modalClose');
+
+  document.querySelectorAll('.course-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const key = card.getAttribute('data-course');
+      const data = courseData[key];
+      document.getElementById('modalEyebrow').textContent = data.code;
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalDesc').textContent = data.desc;
+      document.getElementById('modalList').replaceChildren(...data.list.map(item => { const li = document.createElement('li'); li.textContent = item; return li; }));
+      document.getElementById('modalBenefit').textContent = data.benefit;
+      overlay.classList.add('open');
+    });
+    card.setAttribute('tabindex','0');
+    card.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); card.click(); } });
+  });
+
+  function closeModal(){ overlay.classList.remove('open'); }
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>
